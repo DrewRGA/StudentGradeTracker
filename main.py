@@ -20,8 +20,8 @@ def add_student():
                 print(f"{student.name} is already in the class.\n")
                 return
 
-    age = int(input("Enter their age: "))
-    grade = int(input("Enter their current grade average: "))
+    age = get_integer("Enter their age: ")
+    grade = get_integer("Enter their current grade average: ")
     new_student = Student(name, age, grade)
     class_roster.append(new_student)
     print("\n")
@@ -85,7 +85,7 @@ def update_grade():
         return
 
     user_name = (input("Which Student needs their grade updated? ")).lower()
-    user_grade = int(input("What is their new grade? "))
+    user_grade = get_integer("What is their new grade? ")
 
     for student in class_roster:
         if user_name == student.name:
@@ -153,6 +153,14 @@ def lowest_grade():
             temp_name = student.name
     print(f"{temp_name} has the lowest grade of {temp_grade}%\n")
 
+def get_integer(prompt):
+    while True:
+        try:
+            user_int = int(input(prompt))
+            return user_int
+        except ValueError:
+            print("That is not a valid integer.")
+
 load_students()
 while menu is True:
     print(
@@ -171,8 +179,7 @@ while menu is True:
     )
     print()
 
-    selection = int(input("Please enter 1 - 11 to pick an option: "))
-    print()
+    selection = get_integer("Please enter 1 - 11 to pick an option: ")
 
     if selection == 1:
         add_student()
@@ -204,8 +211,11 @@ while menu is True:
     elif selection == 10:
         lowest_grade()
 
-    else:
+    elif selection == 11:
         save_students()
         print("Saving...\n")
         print("Goodbye.")
         menu = False
+
+    else:
+        print("Please enter 1 - 11.")
