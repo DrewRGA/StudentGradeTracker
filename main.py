@@ -1,4 +1,5 @@
 from student import Student
+from storage import save_students, load_students
 
 menu = True
 class_roster = []
@@ -85,20 +86,6 @@ def update_grade():
 
     print(f"Please double check the class roster, {user_name} in not is the class. \n")
 
-def save_students():
-    with open("students.txt", "w") as file:
-        for student in class_roster:
-            file.write(f"{student.name},{student.age},{student.grade}\n")
-
-def load_students():
-    class_roster.clear()
-    with open("students.txt", "r") as file:
-        for line in file:
-            line = line.strip()
-            line = line.split(",")  # Creates into a list of strings
-            load = Student(str(line[0]),int(line[1]),int(line[2]))
-            class_roster.append(load)
-
 def sort_alpha():
     if not class_roster:
         print("There are no students in the class to sort.\n")
@@ -151,7 +138,7 @@ def get_integer(prompt):
         except ValueError:
             print("That is not a valid integer.")
 
-load_students()
+load_students(class_roster)
 while menu is True:
     print(
         "1. Add Student",
@@ -202,7 +189,7 @@ while menu is True:
         lowest_grade()
 
     elif selection == 11:
-        save_students()
+        save_students(class_roster)
         print("Saving...\n")
         print("Goodbye.")
         menu = False
